@@ -1,9 +1,12 @@
-﻿namespace DevMasquerade.Web;
+﻿using DevMasquerade.Application;
+
+namespace DevMasquerade.Web;
 
 public static class DependencyInjection
 {
     public static IServiceCollection AddProgramDependencies(this IServiceCollection services) => services
-        .AddWebDependencies();
+        .AddWebDependencies()
+        .AddApplicationDependencies();
 
     private static IServiceCollection AddWebDependencies(this IServiceCollection services)
     {
