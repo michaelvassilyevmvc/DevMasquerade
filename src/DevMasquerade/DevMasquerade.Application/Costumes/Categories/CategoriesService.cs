@@ -5,18 +5,25 @@ using Microsoft.Extensions.Logging;
 
 namespace DevMasquerade.Application.Costumes.Categories;
 
-public class CategoriesService(
-    ICategoriesRepository categoriesRepository,
-    ILogger<CategoriesService> logger,
-    IValidator<CreateCategoryDto> createValidator,
-    IValidator<UpdateCategoryDto> updateValidator)
-    : ICategoriesService
+public class CategoriesService : ICategoriesService
 {
-    private readonly ICategoriesRepository _categoriesRepository = categoriesRepository;
-    private readonly ILogger<CategoriesService> _logger = logger;
-    private readonly IValidator<CreateCategoryDto> _createValidator = createValidator;
-    private readonly IValidator<UpdateCategoryDto> _updateValidator = updateValidator;
+    private readonly ICategoriesRepository _categoriesRepository;
+    private readonly ILogger<CategoriesService> _logger;
+    private readonly IValidator<CreateCategoryDto> _createValidator;
+    private readonly IValidator<UpdateCategoryDto> _updateValidator;
 
+    public CategoriesService(
+        ICategoriesRepository categoriesRepository,
+        ILogger<CategoriesService> logger,
+        IValidator<CreateCategoryDto> createValidator,
+        IValidator<UpdateCategoryDto> updateValidator)
+    {
+        _categoriesRepository = categoriesRepository;
+        _logger = logger;
+        _createValidator = createValidator;
+        _updateValidator = updateValidator;
+    }
+    
     public async Task<Category> CreateAsync(CreateCategoryDto request, CancellationToken cancellationToken)
     {
         // валидация данных
@@ -31,7 +38,7 @@ public class CategoriesService(
         var categoryId = Guid.NewGuid();
         var category = new Category(categoryId, request.Name, request.Slug, request.Description, request.ParentId);
 
-        // сохранение сущности
+        // добавление сущности
         await _categoriesRepository.AddAsync(category, cancellationToken);
         // логирование сущности
         _logger.LogInformation("Category {categoryId} created", categoryId);
@@ -39,7 +46,10 @@ public class CategoriesService(
         return category;
     }
 
-    public async Task<Category> UpdateAsync(Guid id, UpdateCategoryDto request, CancellationToken cancellationToken)
+    public async Task<Category> UpdateAsync(
+        Guid id,
+        UpdateCategoryDto request,
+        CancellationToken cancellationToken)
     {
         // Проверка существования сущности
         var category = await _categoriesRepository.GetByIdAsync(id, cancellationToken);

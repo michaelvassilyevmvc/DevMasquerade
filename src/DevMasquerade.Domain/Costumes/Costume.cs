@@ -5,8 +5,20 @@ namespace DevMasquerade.Domain.Costumes;
 
 public class Costume
 {
+    public Costume(Guid id, string name, string? code, string? description, string? shortDescription, AgeGroup ageGroup, Gender targetGender, decimal? basePricePerDay)
+    {
+        Id = id;
+        Name = name;
+        Code = code;
+        Description = description;
+        ShortDescription = shortDescription;
+        AgeGroup = ageGroup;
+        TargetGender = targetGender;
+        BasePricePerDay = basePricePerDay;
+    }
+
     public Guid Id { get; set; }
-    public string Name { get; set; } = default!;
+    public string Name { get; set; } 
     public string? Code { get; set; }
     public string? Description { get; set; }
     public string? ShortDescription { get; set; }
@@ -15,7 +27,7 @@ public class Costume
     public Gender TargetGender { get; set; }
 
     public decimal? BasePricePerDay { get; set; }
-    public bool IsActive { get; set; }
+    public bool IsActive { get; set; } = true;
 
     public ICollection<CostumeVariant> Variants { get; set; }
     public ICollection<CostumeCategory> CostumeCategories { get; set; }

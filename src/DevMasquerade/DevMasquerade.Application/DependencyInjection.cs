@@ -1,4 +1,5 @@
 ﻿using DevMasquerade.Application.Costumes.Categories;
+using DevMasquerade.Application.Costumes.Costumes;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,6 +11,7 @@ public static class DependencyInjection
     {
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
         services.AddScoped<ICategoriesService, CategoriesService>();
+        services.AddScoped<ICostumesService, CostumesService>();
         return services;
     }
 }

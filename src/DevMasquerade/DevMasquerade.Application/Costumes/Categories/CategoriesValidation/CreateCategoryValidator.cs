@@ -1,7 +1,7 @@
 ﻿using DevMasquerade.Contracts.Costumes.Categories;
 using FluentValidation;
 
-namespace DevMasquerade.Application.Costumes.Categories;
+namespace DevMasquerade.Application.Costumes.Categories.CategoriesValidation;
 
 public class CreateCategoryValidator: AbstractValidator<CreateCategoryDto>
 {
