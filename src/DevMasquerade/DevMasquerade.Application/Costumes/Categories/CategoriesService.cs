@@ -75,8 +75,7 @@ public class CategoriesService : ICategoriesService
         category.ParentId = request.ParentId ?? category.ParentId;
         await _categoriesRepository.UpdateAsync(category, cancellationToken);
 
-        // Сохранение измененной сущности
-        await _categoriesRepository.SaveChangesAsync(cancellationToken);
+        
         // Логирование 
         _logger.LogInformation("Category {categoryId} updated", category.Id);
 

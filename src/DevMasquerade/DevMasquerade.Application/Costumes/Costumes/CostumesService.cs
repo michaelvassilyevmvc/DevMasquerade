@@ -41,7 +41,7 @@ public class CostumesService : ICostumesService
         CreateCostumeDto request,
         CancellationToken cancellationToken)
     {
-        // валидация данных 
+        // валидация данных
         var validator = _createValidator.Validate(request);
         if (!validator.IsValid)
         {
@@ -62,6 +62,7 @@ public class CostumesService : ICostumesService
 
         // добавление сущности
         await _costumesRepository.AddAsync(costume, cancellationToken);
+
         // логирование сущности
         _logger.LogInformation("Costume {costumeId} created", costumeId);
 
@@ -75,30 +76,30 @@ public class CostumesService : ICostumesService
     {
         // Проверка сущности
         var costume = await _costumesRepository.GetByIdAsync(id, cancellationToken);
-        if (costume is null)
-        {
-            throw new ValidationException("Costume not found");
-        }
-        
-        var validator = _updateValidator.Validate(request); 
-        if (!validator.IsValid)
-        {
-            throw new ValidationException(validator.Errors);
-        }
-        
-        costume.Name = request.Name;
-        costume.Code = request.Code;
-        costume.Description = request.Description;
-        costume.ShortDescription = request.ShortDescription;
-        costume.AgeGroup = request.AgeGroup;
-        costume.TargetGender = request.TargetGender;
-        costume.BasePricePerDay = request.BasePricePerDay;
-        
-        await _costumesRepository.UpdateAsync(costume, cancellationToken);
-        
-        await _costumesRepository.SaveChangesAsync(cancellationToken);
-        
-        _logger.LogInformation("Costume {costumeId} updated", costume.Id);
+        // if (costume is null)
+        // {
+        //     throw new ValidationException("Costume not found");
+        // }
+
+        // var validator = _updateValidator.Validate(request);
+        // if (!validator.IsValid)
+        // {
+        //     throw new ValidationException(validator.Errors);
+        // }
+        //
+        // costume.Name = request.Name;
+        // costume.Code = request.Code;
+        // costume.Description = request.Description;
+        // costume.ShortDescription = request.ShortDescription;
+        // costume.AgeGroup = request.AgeGroup;
+        // costume.TargetGender = request.TargetGender;
+        // costume.BasePricePerDay = request.BasePricePerDay;
+        //
+        // await _costumesRepository.UpdateAsync(costume, cancellationToken);
+        //
+        // await _costumesRepository.SaveChangesAsync(cancellationToken);
+        //
+        // _logger.LogInformation("Costume {costumeId} updated", costume.Id);
         return costume;
     }
 
@@ -112,11 +113,11 @@ public class CostumesService : ICostumesService
         {
             throw new ValidationException("Costume not found");
         }
-        
+
         await _costumesRepository.DeleteAsync(id, cancellationToken);
-        
+
         await _costumesRepository.SaveChangesAsync(cancellationToken);
-        
+
         _logger.LogInformation("Costume {costumeId} deleted", costume.Id);
         return costume;
     }
