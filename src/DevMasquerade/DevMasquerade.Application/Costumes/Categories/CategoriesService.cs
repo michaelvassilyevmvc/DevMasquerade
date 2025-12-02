@@ -1,7 +1,10 @@
-﻿using DevMasquerade.Contracts.Costumes.Categories;
+﻿using DevMasquerade.Application.Costumes.Categories.Fails.Exceptions;
+using DevMasquerade.Application.Extensions;
+using DevMasquerade.Contracts.Costumes.Categories;
 using DevMasquerade.Domain.Costumes;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
+using Shared;
 
 namespace DevMasquerade.Application.Costumes.Categories;
 
@@ -31,7 +34,7 @@ public class CategoriesService : ICategoriesService
 
         if (!validator.IsValid)
         {
-            throw new ValidationException(validator.Errors);
+            throw new CategoryValidationException(validator.ToErrors());
         }
 
         // создание сущности
@@ -55,7 +58,7 @@ public class CategoriesService : ICategoriesService
         var category = await _categoriesRepository.GetByIdAsync(id, cancellationToken);
         if (category is null)
         {
-            throw new ValidationException("Category not found");
+            throw new CategoryNotFoundException([Error.NotFound(null, "Category not found", id)]);
         }
 
         // Валидация новых данных 
@@ -86,7 +89,7 @@ public class CategoriesService : ICategoriesService
         var category = await _categoriesRepository.GetByIdAsync(id, cancellationToken);
         if (category is null)
         {
-            throw new ValidationException("Category not found");
+            throw new CategoryNotFoundException([Error.NotFound(null, "Category not found", id)]);
         }
 
         // Удаление сущности

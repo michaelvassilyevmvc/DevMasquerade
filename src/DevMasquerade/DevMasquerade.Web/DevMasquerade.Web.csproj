@@ -15,7 +15,9 @@
       <ProjectReference Include="..\..\DevMasquerade.Domain\DevMasquerade.Domain.csproj" />
       <ProjectReference Include="..\DevMasquerade.Application\DevMasquerade.Application.csproj" />
       <ProjectReference Include="..\DevMasquerade.Contracts\DevMasquerade.Contracts.csproj" />
+      <ProjectReference Include="..\DevMasquerade.Infrastructure.Postgresql\DevMasquerade.Infrastructure.Postgresql.csproj" />
       <ProjectReference Include="..\DevMasquerade.Presenters\DevMasquerade.Presenters.csproj" />
+      <ProjectReference Include="..\Shared\Shared.csproj" />
     </ItemGroup>
 
 </Project>
